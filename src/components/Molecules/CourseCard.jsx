@@ -25,7 +25,7 @@ const CourseCard =  ({id, title, image, price, teacher}) => (
 CourseCard.propTypes = {
     title: propTypes.string,
     image: propTypes.string,
-    price: propTypes.number,
+    price: propTypes.string,
     teacher: propTypes.string
 }
 
