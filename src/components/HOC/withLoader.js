@@ -2,10 +2,6 @@ import React from "react";
 
 const withLoader = (propValue) => (WrappedComponent) => {
     return class WithLoader extends React.Component {
-        constructor(props) {
-            super(props);
-        }
-
 
         render() {
             console.log(this.props)
