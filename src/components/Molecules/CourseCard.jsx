@@ -1,26 +1,49 @@
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import {useContext} from "react";
+import CartContext from "../Context/Cart/CartContext";
+import {ADD_TO_CART, REMOVE_FROM_CART} from "../Context/Cart/actions";
 
-const CourseCard =  ({id, title, image, price, teacher}) => (
-    <article className="card">
-        <div className="img-container s-ratio-16-9 s-radius-tr s-radius-tl">
-            <Link to={`/cursos/${id}`}>
-                <img src={image} alt={title} />
-            </Link>
-        </div>
-        <div className="card__data s-border s-radius-br s-radius-bl s-pxy-2">
-            <div className="t5 s-mb-2 s-center">
-                <h3 className="center">{title}</h3>
+const CourseCard =  ({id, title, image, price, teacher}) => {
+
+    const [state,dispatch] = useContext(CartContext);
+
+    return (
+        <article className="card">
+            <div className="img-container s-ratio-16-9 s-radius-tr s-radius-tl">
+                <Link to={`/cursos/${id}`}>
+                    <img src={image} alt={title} />
+                </Link>
             </div>
-            <div className="s-main-center">
-                {`Prof.: ${teacher}`}
+            <div className="card__data s-border s-radius-br s-radius-bl s-pxy-2">
+                <div className="t5 s-mb-2 s-center">
+                    <h3 className="center">{title}</h3>
+                </div>
+                <div className="s-main-center">
+                    {`Prof.: ${teacher}`}
+                </div>
+                <div className="s-main-center">
+                    {
+                        state.cart.find(c => c === id) ?
+                            <button
+                                onClick={() => dispatch({
+                                    type: REMOVE_FROM_CART,
+                                    course:id
+                                })}
+                                className="button--ghost-alert button--tiny" >Remover del carrito</button>
+                        :
+                            <button
+                                onClick={() => dispatch({
+                                    type: ADD_TO_CART,
+                                    course:id
+                                })}
+                                className="button--ghost-alert button--tiny" >{`$ ${price} USD`}</button>
+                    }
+                </div>
             </div>
-            <div className="s-main-center">
-                <a className="button--ghost-alert button--tiny" href="https://ed.team">{`$ ${price} USD`}</a>
-            </div>
-        </div>
-    </article>
-)
+        </article>
+    )
+}
 
 CourseCard.propTypes = {
     title: propTypes.string,
