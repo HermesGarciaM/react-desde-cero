@@ -1,30 +1,13 @@
-import React from "react";
-import axios from "axios";
 import CourseGrid from "../Organisms/CourseGrid";
+import CoursesContext from "../Context/CoursesContext";
+import {useContext} from "react";
 
-class Courses extends React.Component {
-    constructor(props) {
-        super(props);
+const Courses = () => {
 
-        this.state = {
-            courses: []
-        }
-    }
+    const {courses} = useContext(CoursesContext);
 
-    componentDidMount() {
-        axios.get('https://my-json-server.typicode.com/HermesGarciaM/jsonserver/cursos')
-            .then(response => {
-                this.setState({
-                    courses: response.data
-                })
-            })
-    }
-
-    render() {
-        const {courses} = this.state
-        return <CourseGrid courses={courses} />
-    }
+    return (
+        <CourseGrid courses={courses} />
+    )
 }
-
-
 export default Courses
